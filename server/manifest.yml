@@ -1,11 +1,11 @@
   applications:
-  - name: djangoapp
+  - name: berose7
     routes:
-      - route: $HOST.$DOMAIN
+      - route: berose7.us-south.cf.appdomain.cloud
     memory: 128M
     buildpack: python_buildpack
-  - name: djangoapp-nginx
+  - name: berose7-nginx
     routes:
-      - route: $HOST.$DOMAIN/static
+      - route: berose7.us-south.cf.appdomain.cloud/static
     memory: 128M
     buildpack: staticfile_buildpack
