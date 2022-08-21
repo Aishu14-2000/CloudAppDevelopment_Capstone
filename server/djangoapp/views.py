@@ -132,7 +132,7 @@ def add_review(request, id):
             if(review["purchase"]):
                 review["purchase_date"] = datetime.strptime(form.get("purchasedate"), "%m/%d/%Y").isoformat()
                 car = CarModel.objects.get(pk=form["car"])
-                review["car_make"] = car.name
+                review["car_make"] = car.make.name
                 review["car_model"] = car.name
                 review["car_year"] = car.year
             post_url = "https://9b3384ad.us-south.apigw.appdomain.cloud/api/review"
