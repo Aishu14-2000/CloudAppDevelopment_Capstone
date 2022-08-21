@@ -1,14 +1,19 @@
+from operator import truediv
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import CarModel, CarMake, CarDealer, DealerReview
-from .restapis import get_dealers_from_cf, get_dealer_by_id_from_cf, get_dealer_reviews_from_cf, post_request
+from .models import CarDealer, DealerReview, CarModel, CarMake
+from .restapis import get_dealers_from_cf,get_dealer_reviews_from_cf,post_request, get_dealer_by_id_from_cf
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from datetime import datetime
 import logging
 import json
+from django.db import models
+from django.core import serializers
+from django.utils.timezone import now
+import uuid
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -127,7 +132,7 @@ def add_review(request, id):
             if(review["purchase"]):
                 review["purchase_date"] = datetime.strptime(form.get("purchasedate"), "%m/%d/%Y").isoformat()
                 car = CarModel.objects.get(pk=form["car"])
-                review["car_make"] = car.make.name
+                review["car_make"] = car.name
                 review["car_model"] = car.name
                 review["car_year"] = car.year
             post_url = "https://9b3384ad.us-south.apigw.appdomain.cloud/api/review"
